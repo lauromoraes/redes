@@ -22,12 +22,23 @@ class MyTCPRequestHandler(SocketServer.BaseRequestHandler):
 	def handle(self):
 		self.logger.debug('handle')
 		data = recvall(self.request, 2)
-		#print(data)
+		#print(self.request.accept()[1])
 		#current_thread = threading.currentThread()
 		#resp = "%s, %s" % (current_thread.getName(), data)
 		#self.logger.debug('Thread: %s | recv()->"%s"', current_thread.getName(), data)
 		#self.logger.debug('Threads: %s' % str( [ t.getName() for t in threading.enumerate()] ) )
-		self.request.sendall(data)
+		sent = 0
+		size = 1024*40
+		i = 0
+		while(sent < len(data)):
+			if(sent+size <= len(data)):
+				sent += self.request.send(data[sent:sent+size])
+				print (i, " - ", i*size)
+				i+=1
+			else:
+				sent += self.request.send(data[sent:])
+			time.sleep(0.1)
+		#self.request.sendall("data")
 		self.request.shutdown(socket.SHUT_WR)
 		self.request.close()
 		#time.sleep(3)
