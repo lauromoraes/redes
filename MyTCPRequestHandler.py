@@ -28,13 +28,10 @@ class MyTCPRequestHandler(SocketServer.BaseRequestHandler):
 		#self.logger.debug('Thread: %s | recv()->"%s"', current_thread.getName(), data)
 		#self.logger.debug('Threads: %s' % str( [ t.getName() for t in threading.enumerate()] ) )
 		sent = 0
-		size = 1024*40
-		i = 0
+		size = 1024*5
 		while(sent < len(data)):
 			if(sent+size <= len(data)):
 				sent += self.request.send(data[sent:sent+size])
-				print (i, " - ", i*size)
-				i+=1
 			else:
 				sent += self.request.send(data[sent:])
 			time.sleep(0.1)
