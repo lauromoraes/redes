@@ -1,0 +1,16 @@
+//Modelo de arquivo de testes. 
+//Implemente seu programa de forma que seja desconsiderado 
+//nesse arquivo quaisquer linhas que iniciem com "//". Isso é comentário
+
+//Número de operações a serem lidas
+6
+
+//imediatamente as operações deverão ser lidas. Cada entrada deverá ser inserida em uma linha distinta. 
+//Duas entradas em uma única linha serão consideradas como entrada única. Isso pode provocar um erro.
+2;3;+
+7;4;-
+1;-
+8;2;*
+7;9;10;15;+
+2;15;8
+7

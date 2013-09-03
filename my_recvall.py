@@ -1,0 +1,29 @@
+import time,socket, struct, sys
+
+format = struct.Struct('!I')
+
+def recvall(sock,length):
+	data = ''
+	while len(data) < length:
+		try:
+			print('a1')
+			more = sock.recv(length-len(data))
+			print('a2')
+			if not more:
+				print('b')
+				raise EOFError('socket closed %d bytes into a %d-byte message' % (len(data),length))
+			data += more
+			print('a3')
+		except:
+			time.sleep(0.1)
+	#result = ''.join(data)
+	return data
+
+def myGet(sock):
+	lendata = recvall(sock, format.size)
+	length = format.unpack(lendata)
+	return recvall(sock,length)
+
+def myPut(sock, message):
+	sock.send(format.pack(len(message))+message)
+	return
