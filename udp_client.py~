@@ -1,4 +1,4 @@
-import socket, sys, threading, logging
+import socket, sys, threading, logging, time
 
 logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 PACKID = 0
@@ -60,7 +60,7 @@ class MyUDPClient():
 
 	# Recebe as mensagens pacote por pacote
 	def sendall(self):
-		delay = 0.1
+		delay = self.DELAY
 		for pack in self.tosendpacks:
 			totalsent = 0
 			while totalsent < self.MAX:

@@ -1,4 +1,4 @@
-import socket, sys, threading, logging
+import socket, sys, threading, logging, time
 
 logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 PACKID = 0
@@ -79,9 +79,6 @@ class MyUDPClient():
 					raise RuntimeError('Maybe server is down.')
 			except:
 				raise
-			else:
-				ack = True
-				#self.sock.close()
 		return
 
 	# Realiza a conexao com o servidor

@@ -63,7 +63,7 @@ if __name__ == '__main__':
 	logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 	
 	address = (str(sys.argv[1]), int(sys.argv[2])) # let the kernel give us a port
-	server = MyTCPServer(addr, MyTCPRequestHandler)
+	server = MyTCPServer(address, MyTCPRequestHandler)
 	server.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
 	ip, port = server.server_address # find out what port we were given
 

@@ -7,12 +7,15 @@ class MyUDPServer():
 
 	# Construtor
 	def __init__(self):
+		self.clients	= dict()
 		self.PACKID	= 0
 		self.MAX	= 4096
 		self.PORT	= 666
-		self.HOST	= 'localhost'
+		self.HOST	= ''
 		self.DELAY	= 0.1
 		self.sock	= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+		self.sock.bind((self.HOST, self.PORT))
+		self.sock.setblocking(0)
 		self.logger	= logging.getLogger('MyUDPClient')
 		return
 
@@ -20,6 +23,40 @@ class MyUDPServer():
 	def getid(self):
 		self.PACKID += 1
 		return self.PACKID
+
+	# Quebra um pacote, separando os cabecalhos e a mensagem em uma lista
+	def splitpack(self, pack):
+		return pack.split('|')
+
+	#
+	def serve(self):
+		while True:
+			try:
+				self.result = select.select([self.sock],[],[])
+				data, address = self.result[0][0].recvfrom(self.MAX)
+				header = data[:65]
+				fields  = self.splitpack(header)[:-1]
+				print(fields)
+				print(address)
+				self.sock.sendto('ACK' ,address)
+			except KeyboardInterrupt:
+				self.sock.close()
+				print('\nSaindo...')
+				sys.exit(0)
+				raise
+			except:
+				raise
+
+
+server = MyUDPServer()
+server.serve()
+
+
+
+
+
+
+
 
 
 
@@ -63,7 +100,12 @@ def server():
 		except:
 			raise
 
-server()
+#server()
+'''
+t = threading.Thread(target=server.serve)
+t.setDaemon(True) # don't hang on exit
+t.start()
+'''
 '''
 t = threading.Thread(target=server)
 t.setDaemon(True) # don't hang on exit
