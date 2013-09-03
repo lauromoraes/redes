@@ -3,6 +3,7 @@ def makearq():
 	arq = open(path, 'w+')
 
 	data = '|'.join( [ str(i) for i in range(10000)] )
+	
 
 	print(data)
 
