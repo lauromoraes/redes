@@ -128,7 +128,7 @@ class MYTCPClient(object):
 
 	def wait_response(self):
 		self.logger.debug('wait_response')
-		response = recvall(self.__my_socket, 3)
+		response = recvall(self.__my_socket, 2)
 		self.received_data = response
 		return response
 
@@ -144,6 +144,7 @@ if __name__ == '__main__':
 	c.cripto()
 	#print( c.break_data() )
 	c.set_server_address( ('200.239.135.25', 5430) )
+	#c.set_server_address( ('200.239.133.2', 666) )
 	c.setup_socket()
 	c.send_data()
 	

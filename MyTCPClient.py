@@ -146,6 +146,7 @@ if __name__ == '__main__':
 	c.cripto()
 	#print( c.break_data() )
 	c.set_server_address( ('200.239.135.25', 5430) )
+	#c.set_server_address( ('200.239.133.2', 666) )
 	c.setup_socket()
 	c.send_data()
 	
