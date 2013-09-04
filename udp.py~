@@ -5,6 +5,7 @@ PACKID = 0
 
 class opts():
 	conn = '0'
+	npacksrec = '1'
 
 class MyUDPServer():
 
@@ -31,6 +32,14 @@ class MyUDPServer():
 	# Quebra um pacote, separando os cabecalhos e a mensagem em uma lista
 	def splitpack(self, pack):
 		return pack.split('|')
+	
+	def confirm_conn(self, fields):
+		self.logger.debug('confirm_conn')
+		if not fields[1] in self.clients:
+			self.clients[fields[1]] = list()
+			self.clients[fields[1]].append(dict()) # Pacotes de tarefas [0]
+			self.clients[fields[1]].append(dict()) # Pacotes de respostas [1]
+		return opts.conn
 
 	#
 	def serve(self):
@@ -46,16 +55,19 @@ class MyUDPServer():
 				fields  = self.splitpack(header)[:-1]
 				
 				if fields[0] == opts.conn: # Cliente esta querendo se conectar
-					self.logger.debug('conn')
-					if not fields[1] in self.clients:
-						self.clients[fields[1]] = list()
-						self.clients[fields[1]].append(dict()) # Pacotes de tarefas [0]
-						self.clients[fields[1]].append(dict()) # Pacotes de respostas [1]
-						self.sock.sendto('' ,address)
-					
+					m = self.confirm_conn(fields)
+					self.sock.sendto(m, address)
+				elif fields[0] == opts.npacksrec:
+					m = opts.npacksrec
+					self.sock.sendto(m, address)
+					npacks = fields[2]
+					for i in range(npacks):
+						pass
+
+
 				print(fields)
 				print(address)
-				self.sock.sendto('ACK' ,address)
+				
 			except KeyboardInterrupt:
 				self.sock.close()
 				print('\nSaindo...')

@@ -53,9 +53,9 @@ class MyUDPClient():
 		self.tosendpacks = list()
 		opt	= 0
 		#addr	= self.sock.getsockname()
-		addr	= get_lan_ip()
-		packid	= self.getid()
+		addr	= get_lan_ip()		
 		for msg in self.msgqueue:
+			packid	= self.getid()
 			pack	= self.makepacket(opt, addr, packid, msg)
 			self.tosendpacks.append(pack)
 		return self.tosendpacks
