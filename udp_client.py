@@ -120,7 +120,6 @@ class MyUDPClient():
 
 	# Realiza a conexao com o servidor
 	def conn(self):
-<<<<<<< HEAD
 		flag = True
 		self.logger.debug('conn')
 		try:
@@ -141,7 +140,6 @@ class MyUDPClient():
 			raise
 		return True
 
-=======
 		h, p = self.HOST, self.PORT
 		self.sock.connect((h, p))
 
@@ -150,7 +148,6 @@ class MyUDPClient():
 		return pack.split('|')
 
 #client()
->>>>>>> c2d621d8eae1e84ca49988da46ca726d686e4314
 c = MyUDPClient()
 c.conn()
 
