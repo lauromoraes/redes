@@ -6,6 +6,11 @@ from entrada_aleatoria import *
 logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 PACKID = 0
 
+class opts():
+	conn		= '0'
+	npacksrec	= '1'
+	packrec		= '2'
+
 class MyUDPClient():
 
 	# Construtor
@@ -40,11 +45,13 @@ class MyUDPClient():
 
 	# Armazana a mensagem
 	def setmsg(self, msg=''):
+		self.logger.debug('setmsg')
 		self.msg = msg
 		self.msg = self.input_data
 
 	# Divide a mensagem original em pedacos para que se monte os pacotes ao se juntar com os cabecalhos
 	def setpacks(self):
+		self.logger.debug('setpacks')
 		tam = len(self.msg)
 		broken = 0
 		msgsize = self.MAX - 64
@@ -62,12 +69,14 @@ class MyUDPClient():
 
 	# Monta o pacote juntando todos os campos
 	def makepacket(self, opt, addr, packid, message):
+		self.logger.debug('makepacket')
 		msg = '|'.join((str(opt), addr, str(packid), message))
 		msg += (' ' * (self.MAX - len(msg)))
 		return msg
 
 	# Monta todos os pacotes
 	def makeallpackets(self):
+		self.logger.debug('makeallpackets')
 		self.tosendpacks = list()
 		opt	= 1
 		addr	= self.sock.getsockname()
@@ -79,9 +88,15 @@ class MyUDPClient():
 			pack	= self.makepacket(opt, addr, packid, msg)
 			self.tosendpacks.append(pack)
 		return self.tosendpacks
+		
+	# Quebra um pacote, separando os cabecalhos e a mensagem em uma lista
+	def splitpack(self, pack):
+		self.logger.debug('splitpack')
+		return pack.split('|')
 
 	# Recebe as mensagens pacote por pacote
 	def sendall(self):
+		self.logger.debug('sendall')
 		delay = self.DELAY
 		for pack in self.tosendpacks:
 			totalsent = 0
@@ -105,53 +120,26 @@ class MyUDPClient():
 
 	# Realiza a conexao com o servidor
 	def conn(self):
-		h, p = self.HOST, self.PORT
-		self.sock.connect((h, p))
-
-	# Quebra um pacote, separando os cabecalhos e a mensagem em uma lista
-	def splitpack(self, pack):
-		return pack.split('|')
-
-##################################
-def client():
-
-	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	logger = logging.getLogger('MyUDPClient')
-
-	MAX = 4096
-	PORT = 5430
-	HOST = 'localhost'
-	delay = 0.1
-	message = 'teste'
-	PACKID = 0
-
-	# Cliente conecta-se ao servidorPACKID = 
-	sock.connect((HOST, PORT))
-	logger.debug('Client socket name is: %s' % str(sock.getsockname()))
-
-	opt = 1
-	addr = sock.getsockname()
-	packid = makeid()
-	pack = makepacket(opt, addr, packid, message)
-	print(pack)
-	ack = False
-	while not ack:
-		sock.send(pack)
-		sock.settimeout(delay)
+		flag = True
+		self.logger.debug('conn')
 		try:
-			data = sock.recv(MAX)
-			print(data)
-		except socket.timeout:
-			delay *= 2
-			if delay > 2.0:
-				raise RuntimeError('Maybe server is down.')
-		except:
+			h, p = self.HOST, self.PORT
+			self.sock.connect((h, p))
+			m = self.makepacket(opts.conn, get_lan_ip(), 0, '')
+			self.sock.settimeout(5)
+			self.sock.sendall(m)
+			while True:
+				data = self.sock.recv(64)
+				data = self.splitpack(data)
+				if data[0] == opts.conn:
+					break
+			self.sock.settimeout(None)
+		except Exception as e:
+			print >>sys.stderr, e
+			sys.exit(2)
 			raise
-		else:
-			ack = True
-			sock.close()
+		return True
 
-#client()
 c = MyUDPClient()
 c.conn()
 
@@ -166,10 +154,3 @@ c.setmsg(msg)
 c.setpacks()
 q = c.makeallpackets()
 c.sendall()
-
-'''
-for i in q:
-	print('LEN: ', len(i))
-	print(c.splitpack(i))
-	print('\n')
-'''
