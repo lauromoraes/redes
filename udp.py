@@ -73,7 +73,7 @@ class MyUDPServer():
 						self.result = select.select([self.sock],[],[])
 						address, fields, data = self.rec()
 						if fields[0] == opts.packrec:
-						pass
+							pass
 
 				print(fields)
 				print(address)
