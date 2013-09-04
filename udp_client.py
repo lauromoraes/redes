@@ -143,8 +143,6 @@ class MyUDPClient():
 		h, p = self.HOST, self.PORT
 		self.sock.connect((h, p))
 
-#client()
->>>>>>> c2d621d8eae1e84ca49988da46ca726d686e4314
 c = MyUDPClient()
 c.conn()
 
