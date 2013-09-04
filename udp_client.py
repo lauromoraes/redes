@@ -70,13 +70,13 @@ class MyUDPClient():
 	def makeallpackets(self):
 		self.tosendpacks = list()
 		opt	= 1
-		addr	= self.sock.getsockname()
+		addr = self.sock.getsockname()
 		opt	= 0
-		#addr	= self.sock.getsockname()
-		addr	= get_lan_ip()		
+		#addr = self.sock.getsockname()
+		addr = get_lan_ip()
 		for msg in self.msgqueue:
-			packid	= self.getid()
-			pack	= self.makepacket(opt, addr, packid, msg)
+			packid = self.getid()
+			pack = self.makepacket(opt, addr, packid, msg)
 			self.tosendpacks.append(pack)
 		return self.tosendpacks
 
@@ -112,45 +112,6 @@ class MyUDPClient():
 	def splitpack(self, pack):
 		return pack.split('|')
 
-##################################
-def client():
-
-	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	logger = logging.getLogger('MyUDPClient')
-
-	MAX = 4096
-	PORT = 5430
-	HOST = 'localhost'
-	delay = 0.1
-	message = 'teste'
-	PACKID = 0
-
-	# Cliente conecta-se ao servidorPACKID = 
-	sock.connect((HOST, PORT))
-	logger.debug('Client socket name is: %s' % str(sock.getsockname()))
-
-	opt = 1
-	addr = sock.getsockname()
-	packid = makeid()
-	pack = makepacket(opt, addr, packid, message)
-	print(pack)
-	ack = False
-	while not ack:
-		sock.send(pack)
-		sock.settimeout(delay)
-		try:
-			data = sock.recv(MAX)
-			print(data)
-		except socket.timeout:
-			delay *= 2
-			if delay > 2.0:
-				raise RuntimeError('Maybe server is down.')
-		except:
-			raise
-		else:
-			ack = True
-			sock.close()
-
 #client()
 c = MyUDPClient()
 c.conn()
@@ -162,14 +123,7 @@ out_path = "output.txt"
 c.read_input(in_path)
 
 msg = 'testando ' * 1000 
-c.setmsg(msg)
+c.setmsg()
 c.setpacks()
 q = c.makeallpackets()
 c.sendall()
-
-'''
-for i in q:
-	print('LEN: ', len(i))
-	print(c.splitpack(i))
-	print('\n')
-'''
