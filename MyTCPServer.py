@@ -56,7 +56,7 @@ class MyTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 		return SocketServer.TCPServer.close_request(self, request_address)
 
 if __name__ == '__main__':
-	import socket
+	#import socket
 	import sys
 	import threading
 	import logging

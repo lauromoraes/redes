@@ -3,6 +3,7 @@ import socket
 import threading
 import logging
 from recvall import *
+from entrada_aleatoria import *
 
 logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 
@@ -138,8 +139,9 @@ class MYTCPClient(object):
 
 if __name__ == '__main__':
 	c = MYTCPClient()
-	in_path = "modelo_entrada2.txt"
-	out_path = "modelo_saida.txt"
+	getInput()
+	in_path = "input.txt"
+	out_path = "output.txt"
 	c.read_input2(in_path)
 	c.cripto()
 	#print( c.break_data() )
@@ -149,7 +151,6 @@ if __name__ == '__main__':
 	c.send_data()
 	
 	data = c.wait_response()
-	print(data)
 	c.close_socket()
 	c.decripto()
 	c.write_output(out_path)

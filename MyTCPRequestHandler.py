@@ -4,6 +4,7 @@ import threading
 import SocketServer
 import time
 from recvall import *
+from calc import *
 
 logging.basicConfig( level = logging.DEBUG, format = "%(name)s: %(message)s", )
 
@@ -27,13 +28,14 @@ class MyTCPRequestHandler(SocketServer.BaseRequestHandler):
 		#resp = "%s, %s" % (current_thread.getName(), data)
 		#self.logger.debug('Thread: %s | recv()->"%s"', current_thread.getName(), data)
 		#self.logger.debug('Threads: %s' % str( [ t.getName() for t in threading.enumerate()] ) )
+		resp = calc(data)
 		sent = 0
 		size = 1024*5
-		while(sent < len(data)):
-			if(sent+size <= len(data)):
-				sent += self.request.send(data[sent:sent+size])
+		while(sent < len(resp)):
+			if(sent+size <= len(resp)):
+				sent += self.request.send(resp[sent:sent+size])
 			else:
-				sent += self.request.send(data[sent:])
+				sent += self.request.send(resp[sent:])
 			time.sleep(0.1)
 		#self.request.sendall("data")
 		self.request.shutdown(socket.SHUT_WR)
