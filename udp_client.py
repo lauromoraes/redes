@@ -79,13 +79,13 @@ class MyUDPClient():
 		self.logger.debug('makeallpackets')
 		self.tosendpacks = list()
 		opt	= 1
-		addr	= self.sock.getsockname()
+		addr = self.sock.getsockname()
 		opt	= 0
-		#addr	= self.sock.getsockname()
-		addr	= get_lan_ip()		
+		#addr = self.sock.getsockname()
+		addr = get_lan_ip()
 		for msg in self.msgqueue:
-			packid	= self.getid()
-			pack	= self.makepacket(opt, addr, packid, msg)
+			packid = self.getid()
+			pack = self.makepacket(opt, addr, packid, msg)
 			self.tosendpacks.append(pack)
 		return self.tosendpacks
 		
@@ -120,6 +120,7 @@ class MyUDPClient():
 
 	# Realiza a conexao com o servidor
 	def conn(self):
+<<<<<<< HEAD
 		flag = True
 		self.logger.debug('conn')
 		try:
@@ -140,6 +141,16 @@ class MyUDPClient():
 			raise
 		return True
 
+=======
+		h, p = self.HOST, self.PORT
+		self.sock.connect((h, p))
+
+	# Quebra um pacote, separando os cabecalhos e a mensagem em uma lista
+	def splitpack(self, pack):
+		return pack.split('|')
+
+#client()
+>>>>>>> c2d621d8eae1e84ca49988da46ca726d686e4314
 c = MyUDPClient()
 c.conn()
 
@@ -150,7 +161,7 @@ out_path = "output.txt"
 c.read_input(in_path)
 
 msg = 'testando ' * 1000 
-c.setmsg(msg)
+c.setmsg()
 c.setpacks()
 q = c.makeallpackets()
 c.sendall()
