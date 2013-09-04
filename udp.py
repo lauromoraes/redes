@@ -4,13 +4,15 @@ logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 PACKID = 0
 
 class opts():
-	conn = '0'
-	npacksrec = '1'
+	conn		= '0'
+	npacksrec	= '1'
+	packrec		= '2'
 
 class MyUDPServer():
 
 	# Construtor
 	def __init__(self):
+
 		self.clients	= dict()
 		self.PACKID	= 0
 		self.MAX	= 4096
@@ -18,10 +20,12 @@ class MyUDPServer():
 		self.HOST	= ''
 		self.DELAY	= 0.1
 		self.sock	= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
 		self.sock.bind((self.HOST, self.PORT))
 		self.sock.setblocking(0)
 		self.logger	= logging.getLogger('MyUDPServer')
 		self.logger.debug('__init__')
+
 		return
 
 	# Gerencia o contador de pacotes
@@ -32,6 +36,16 @@ class MyUDPServer():
 	# Quebra um pacote, separando os cabecalhos e a mensagem em uma lista
 	def splitpack(self, pack):
 		return pack.split('|')
+
+	def rec(self):
+		self.result = select.select([self.sock],[],[])
+		data, address = self.result[0][0].recvfrom(self.MAX)
+		if not len(data) < 65:
+			header = data[:65]
+		else:
+			header = data
+		fields  = self.splitpack(header)[:-1]
+		return address, fields, data
 	
 	def confirm_conn(self, fields):
 		self.logger.debug('confirm_conn')
@@ -46,14 +60,7 @@ class MyUDPServer():
 		self.logger.debug('serve')
 		while True:
 			try:
-				self.result = select.select([self.sock],[],[])
-				data, address = self.result[0][0].recvfrom(self.MAX)
-				if not len(data) < 65:
-					header = data[:65]
-				else:
-					header = data
-				fields  = self.splitpack(header)[:-1]
-				
+				address, fields, data = self.rec()
 				if fields[0] == opts.conn: # Cliente esta querendo se conectar
 					m = self.confirm_conn(fields)
 					self.sock.sendto(m, address)
@@ -62,8 +69,10 @@ class MyUDPServer():
 					self.sock.sendto(m, address)
 					npacks = fields[2]
 					for i in range(npacks):
+						self.result = select.select([self.sock],[],[])
+						address, fields, data = self.rec()
+						if fields[0] == opts.packrec:
 						pass
-
 
 				print(fields)
 				print(address)
