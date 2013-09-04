@@ -8,7 +8,7 @@ def isInt(num):
 def calc(datas):
 	results = []
 	for data in datas.split('\n'):
-		if(data[-2:] not in {';+', ';-', ';*'}) or (len(data.split(';')[:-1]) < 2) or any (isInt(val) == False for val in data.split(';')[:-1]):
+		if(data[-2:] not in [';+', ';-', ';*']) or (len(data.split(';')[:-1]) < 2) or any (isInt(val) == False for val in data.split(';')[:-1]):
 			result = 'Erro'
 		else:
 			valores = map(int, data.split(';')[:-1])
