@@ -1,4 +1,5 @@
 import socket, sys, threading, logging, time
+from getIP import *
 
 logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 PACKID = 0
@@ -43,14 +44,14 @@ class MyUDPClient():
 
 	# Monta o pacote juntando todos os campos
 	def makepacket(self, opt, addr, packid, message):
-		msg = '|'.join((str(opt), str(addr[0]), str(addr[1]), str(packid), message))
+		msg = '|'.join((str(opt), addr, str(packid), message))
 		msg += (' ' * (self.MAX - len(msg)))
 		return msg
 
 	# Monta todos os pacotes
 	def makeallpackets(self):
 		self.tosendpacks = list()
-		opt	= 1
+		opt	= 0
 		addr	= self.sock.getsockname()
 		packid	= self.getid()
 		for msg in self.msgqueue:
@@ -79,9 +80,6 @@ class MyUDPClient():
 					raise RuntimeError('Maybe server is down.')
 			except:
 				raise
-			else:
-				ack = True
-				#self.sock.close()
 		return
 
 	# Realiza a conexao com o servidor

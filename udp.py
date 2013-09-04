@@ -3,6 +3,9 @@ import socket, sys, threading, logging, select
 logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 PACKID = 0
 
+class opts():
+	conn = '0'
+
 class MyUDPServer():
 
 	# Construtor
@@ -16,7 +19,8 @@ class MyUDPServer():
 		self.sock	= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		self.sock.bind((self.HOST, self.PORT))
 		self.sock.setblocking(0)
-		self.logger	= logging.getLogger('MyUDPClient')
+		self.logger	= logging.getLogger('MyUDPServer')
+		self.logger.debug('__init__')
 		return
 
 	# Gerencia o contador de pacotes
@@ -30,12 +34,25 @@ class MyUDPServer():
 
 	#
 	def serve(self):
+		self.logger.debug('serve')
 		while True:
 			try:
 				self.result = select.select([self.sock],[],[])
 				data, address = self.result[0][0].recvfrom(self.MAX)
-				header = data[:65]
+				if not len(data) < 65:
+					header = data[:65]
+				else:
+					header = data
 				fields  = self.splitpack(header)[:-1]
+				
+				if fields[0] == opts.conn: # Cliente esta querendo se conectar
+					self.logger.debug('conn')
+					if not fields[1] in self.clients:
+						self.clients[fields[1]] = list()
+						self.clients[fields[1]].append(dict()) # Pacotes de tarefas [0]
+						self.clients[fields[1]].append(dict()) # Pacotes de respostas [1]
+						self.sock.sendto('' ,address)
+					
 				print(fields)
 				print(address)
 				self.sock.sendto('ACK' ,address)

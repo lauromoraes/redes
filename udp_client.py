@@ -1,4 +1,5 @@
 import socket, sys, threading, logging, time
+from getIP import *
 
 logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 PACKID = 0
@@ -43,15 +44,16 @@ class MyUDPClient():
 
 	# Monta o pacote juntando todos os campos
 	def makepacket(self, opt, addr, packid, message):
-		msg = '|'.join((str(opt), str(addr[0]), str(addr[1]), str(packid), message))
+		msg = '|'.join((str(opt), addr, str(packid), message))
 		msg += (' ' * (self.MAX - len(msg)))
 		return msg
 
 	# Monta todos os pacotes
 	def makeallpackets(self):
 		self.tosendpacks = list()
-		opt	= 1
-		addr	= self.sock.getsockname()
+		opt	= 0
+		#addr	= self.sock.getsockname()
+		addr	= get_lan_ip()
 		packid	= self.getid()
 		for msg in self.msgqueue:
 			pack	= self.makepacket(opt, addr, packid, msg)
