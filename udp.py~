@@ -1,4 +1,5 @@
 import socket, sys, threading, logging, select
+from getIP import *
 
 logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
 PACKID = 0
@@ -12,17 +13,20 @@ class MyUDPServer():
 
 	# Construtor
 	def __init__(self):
+
 		self.clients	= dict()
 		self.PACKID	= 0
 		self.MAX	= 4096
-		self.PORT	= 666
-		self.HOST	= ''
+		self.PORT	= 5430
+		self.HOST	= get_lan_ip()
 		self.DELAY	= 0.1
 		self.sock	= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
 		self.sock.bind((self.HOST, self.PORT))
 		self.sock.setblocking(0)
 		self.logger	= logging.getLogger('MyUDPServer')
 		self.logger.debug('__init__')
+
 		return
 
 	# Gerencia o contador de pacotes
@@ -107,7 +111,7 @@ def makepacket(opt, addr, packid, message):
 def server():
 	MAX = 4096
 	PORT = 666
-	HOST = 'localhost'
+	HOST = get_lan_ip()
 	delay = 0.1
 	message = 'teste'
 
