@@ -23,6 +23,7 @@ class MyUDPServer():
 		self.sock	= socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 		self.sock.bind((self.HOST, self.PORT))
+		self.server_address = (self.HOST, self.PORT)
 		self.sock.setblocking(0)
 		self.logger	= logging.getLogger('MyUDPServer')
 		self.logger.debug('__init__')
@@ -62,18 +63,25 @@ class MyUDPServer():
 		while True:
 			try:
 				address, fields, data = self.rec()
-				if fields[0] == opts.conn: # Cliente esta querendo se conectar
+
+				# Rotina que cadastra um novo cliente
+				if fields[0] == opts.conn:
 					m = self.confirm_conn(fields)
 					self.sock.sendto(m, address)
 					s = ': '.join( ('conn accepted', address[0], repr(address[1])) )
 					self.logger.debug( s )
+
+				# Rotina para receber requisicao de servico do cliente
+				# Primeiro o cliente informa quantos pacotes ira enviar
 				elif fields[0] == opts.npacksrec:
 					m = opts.npacksrec
 					self.sock.sendto(m, address)
 					npacks = fields[2]
 					m = opts.packrec
 					self.logger.debug('receiving %s packs from %s' % (npacks, address) )
+					# Servidor comeca a receber os pacotes e confimrar 
 					for i in range( int(npacks) ):
+						print(threading.currentThread())
 						address, fields, data = self.rec()
 						_id = fields[2]
 						self.logger.debug('pack %s received from %s' % (_id, address) )
@@ -82,9 +90,10 @@ class MyUDPServer():
 							self.clients[fields[1]][0][_id] = data
 							print(data)
 							self.sock.sendto(m, address)
+						time.sleep(0.5)
 
-				print(fields)
-				print(address)
+				#print(fields)
+				#print(address)
 				
 			except KeyboardInterrupt:
 				self.sock.close()
@@ -94,8 +103,40 @@ class MyUDPServer():
 			except:
 				raise
 
+if __name__ == '__main__':
 
-server = MyUDPServer()
-t = threading.Thread(target=server.serve)
-t.setDaemon(True) # don't hang on exit
-t.run()
+	logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
+	
+	#address = (str(sys.argv[1]), int(sys.argv[2])) # let the kernel give us a port
+	#address = (get_lan_ip(), int(sys.argv[1])) # let the kernel give us a port
+	server = MyUDPServer()
+	#server.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1)
+	ip, port = server.server_address # find out what port we were given
+
+	try:
+		t = threading.Thread(target=server.serve)
+		t.setDaemon(True) # don't hang on exit
+		t.start()
+		print "Server loop running in thread:", t.name
+	except RuntimeError as e:
+		print >>sys.stderr, e
+		sys.exit(2)
+
+	logger = logging.getLogger('server')
+	logger.info('Server on %s:%s', ip, port)
+	while True:
+		try:
+		    	server.sock.settimeout(2)
+		    	pass
+		except KeyboardInterrupt:
+			print("\nSaindo...")
+			server.sock.shutdown(socket.SHUT_WR)
+			server.sock.close()
+			server.server_close()			
+			sys.exit(0)
+			raise
+		except:
+			raise
+
+	server.sock.close()
+

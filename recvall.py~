@@ -17,8 +17,8 @@ def recvall(the_socket,timeout=''):
         elif time.time()-begin>timeout*2:
             break
         wait=0
-        try:
-            data=the_socket.recv(4096)
+        try:	    
+            data=the_socket.recv(16384)
             if data:
                 total_data.append(data)
                 begin=time.time()
