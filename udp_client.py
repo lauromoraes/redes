@@ -143,14 +143,6 @@ class MyUDPClient():
 		h, p = self.HOST, self.PORT
 		self.sock.connect((h, p))
 
-<<<<<<< HEAD
-	# Quebra um pacote, separando os cabecalhos e a mensagem em uma lista
-	def splitpack(self, pack):
-		return pack.split('|')
-
-#client()
-=======
->>>>>>> aa60ee55373597032f2a63ba9643aa467e9c4d0b
 c = MyUDPClient()
 c.conn()
 

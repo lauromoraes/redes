@@ -88,13 +88,6 @@ class MyUDPServer():
 
 
 server = MyUDPServer()
-<<<<<<< HEAD
-#server.serve()
-
-#server()
-
-=======
->>>>>>> aa60ee55373597032f2a63ba9643aa467e9c4d0b
 t = threading.Thread(target=server.serve)
 t.setDaemon(True) # don't hang on exit
 t.run()
