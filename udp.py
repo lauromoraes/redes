@@ -1,4 +1,4 @@
-import socket, sys, threading, logging, select
+import socket, sys, threading, logging, select, time
 from getIP import *
 
 logging.basicConfig(level = logging.DEBUG, format = "%(name)s: %(message)s",)
@@ -65,15 +65,23 @@ class MyUDPServer():
 				if fields[0] == opts.conn: # Cliente esta querendo se conectar
 					m = self.confirm_conn(fields)
 					self.sock.sendto(m, address)
+					s = ': '.join( ('conn accepted', address[0], repr(address[1])) )
+					self.logger.debug( s )
 				elif fields[0] == opts.npacksrec:
 					m = opts.npacksrec
 					self.sock.sendto(m, address)
 					npacks = fields[2]
-					for i in range(npacks):
-						self.result = select.select([self.sock],[],[])
+					m = opts.packrec
+					self.logger.debug('receiving %s packs from %s' % (npacks, address) )
+					for i in range( int(npacks) ):
 						address, fields, data = self.rec()
+						_id = fields[2]
+						self.logger.debug('pack %s received from %s' % (_id, address) )
 						if fields[0] == opts.packrec:
-							pass
+							self.logger.debug('pack %s received from %s' % (_id, address) )
+							self.clients[fields[1]][0][_id] = data
+							print(data)
+							self.sock.sendto(m, address)
 
 				print(fields)
 				print(address)
