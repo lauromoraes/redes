@@ -70,7 +70,7 @@ class MyUDPClient():
 	# Monta o pacote juntando todos os campos
 	def makepacket(self, opt, addr, packid, message):
 		self.logger.debug('makepacket')
-		msg = '|'.join((str(opt), addr, str(packid), message))
+		msg = '|'.join((str(opt), addr, str(packid), message ))
 		msg += (' ' * (self.MAX - len(msg)))
 		return msg
 
@@ -78,10 +78,8 @@ class MyUDPClient():
 	def makeallpackets(self):
 		self.logger.debug('makeallpackets')
 		self.tosendpacks = list()
-		opt	= 1
+		opt	= 2
 		addr = self.sock.getsockname()
-		opt	= 0
-		#addr = self.sock.getsockname()
 		addr = get_lan_ip()
 		for msg in self.msgqueue:
 			packid = self.getid()
@@ -98,25 +96,25 @@ class MyUDPClient():
 	def sendall(self):
 		self.logger.debug('sendall')
 		delay = self.DELAY
+		m = self.makepacket(opts.npacksrec, get_lan_ip(), str(len(self.tosendpacks)), '')
+		self.sock.sendall(m)
 		for pack in self.tosendpacks:
 			totalsent = 0
-			while totalsent < self.MAX:
-				sent = self.sock.send(pack[totalsent:])
-				print('sent: ', sent)
-				if sent == 0:
-					raise RuntimeError('socket connection broken')
-				totalsent += sent
-			self.sock.settimeout(delay)
-			try:
-				data = self.sock.recv(self.MAX)
-				print(data)
-			except socket.timeout:
-				delay *= 2
-				if delay > 2.0:
-					raise RuntimeError('Maybe server is down.')
-			except:
-				raise
-		return
+			repeat = True
+			while repeat:
+				while totalsent < self.MAX:
+					sent = self.sock.send(pack[totalsent:])
+					print('sent: ', sent)
+					if sent == 0:
+						raise RuntimeError('socket connection broken')
+					totalsent += sent
+				self.sock.settimeout(8)
+				data = self.sock.recv(64)
+				data = self.splitpack(data)
+				if data[0] == opts.packrec:
+					repeat = False
+		self.sock.settimeout(None)
+		return True
 
 	# Realiza a conexao com o servidor
 	def conn(self):
@@ -134,7 +132,9 @@ class MyUDPClient():
 				if data[0] == opts.conn:
 					break
 			self.sock.settimeout(None)
+			self.logger.debug('connection established')
 		except Exception as e:
+			self.logger.debug('connection not established')
 			print >>sys.stderr, e
 			sys.exit(2)
 			raise
@@ -143,11 +143,7 @@ class MyUDPClient():
 		h, p = self.HOST, self.PORT
 		self.sock.connect((h, p))
 
-#client()
->>>>>>> c2d621d8eae1e84ca49988da46ca726d686e4314
 c = MyUDPClient()
-c.conn()
-
 
 getInput()
 in_path = "input.txt"
@@ -158,4 +154,6 @@ msg = 'testando ' * 1000
 c.setmsg()
 c.setpacks()
 q = c.makeallpackets()
+
+c.conn()
 c.sendall()
