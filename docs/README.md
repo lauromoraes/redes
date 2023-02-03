@@ -56,12 +56,6 @@
 ### Protocolos para identificação
 - DNS
 
-### Protocolos de comunicação
-- Email: SMTP, IMAP, POP3
-- Chat: Matrix, IRC
-- MLS(Message Layer Security)
-- Alternativa ao email: TMTP
-
 ### Protocolos de encapsulamento
 - SPLIP
 
