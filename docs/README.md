@@ -14,6 +14,7 @@
 |  IRC                 |   rede distribuída         |    comunicação(chat)        |
 |  TMTP                 |   rede centralizada         |    comunicação(alternativa ao email)        |
 |  MLS(Message Layer Security)                 |   rede local         |    comunicação(alternativa ao email)        |
+|  nostr-protocol                |   rede distribuída/externa         |    alternativa ao ActivityPub, HTTP |
 
 ### Protocolos da web 3
 - Dat
