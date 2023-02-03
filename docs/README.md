@@ -12,6 +12,16 @@
 - Hypercore
 - Blockchain
 - RSS3
+- Fileicon
+- Waku
+- Spring83
+- Dlive
+- Domain Connect
+- Atek
+- Ambients protocol
+
+### Protocolo de sincronização
+- Gradesca
 
 #### Protocolos de compartilhamento de arquivo
 - BitTorrent
@@ -39,12 +49,10 @@
 - DNS
 
 ### Protocolos de comunicação
-- SMTP
-- IMAP
-- POP3
-- Matrix
-- IRC
-- TMTP
+- Email: SMTP, IMAP, POP3
+- Chat: Matrix, IRC
+- MLS(Message Layer Security)
+- Alternativa ao email: TMTP
 
 ### Protocolos de encapsulamento
 - SPLIP
