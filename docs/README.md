@@ -7,7 +7,13 @@
 |  SFTP                 |  rede local/externa          |    transferência de arquivo       |
 |  Webdav                 |  rede local/externa          |    transferência de arquivo       |
 |  HTTP                 |   rede local/externa         |    transferência de arquivo       |
-
+|  SMTP                 |   rede distribuída         |    comunicação(email)      |
+|  IMAP                 |   rede distribuída         |    comunicação(email)      |
+|  POP3                 |   rede distribuída         |    comunicação(email)      |
+|  Matrix                 |   rede distribuída         |    comunicação(chat)      |
+|  IRC                 |   rede distribuída         |    comunicação(chat)        |
+|  TMTP                 |   rede centralizada         |    comunicação(alternativa ao email)        |
+|  MLS(Message Layer Security)                 |   rede local         |    comunicação(alternativa ao email)        |
 
 ### Protocolos da web 3
 - Dat
