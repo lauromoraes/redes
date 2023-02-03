@@ -1,11 +1,13 @@
 # Protocolos de rede
 
-#### Protocolos de transferência de arquivo
-- Localsend
-- FTP
-- SFTP
-- Webdav
-- HTTP
+| nome do protocolo | utilização | propósito |
+|-------------------|------------|-----------|
+|  Localsend                 |   rede local         |   transferência de arquivo        |
+|  FTP                 |   rede local/externa         |    transferência de arquivo       |
+|  SFTP                 |  rede local/externa          |    transferência de arquivo       |
+|  Webdav                 |  rede local/externa          |    transferência de arquivo       |
+|  HTTP                 |   rede local/externa         |    transferência de arquivo       |
+
 
 ### Protocolos da web 3
 - Dat
