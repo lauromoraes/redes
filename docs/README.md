@@ -14,32 +14,32 @@
 |  IRC                 |   rede distribuída         |    comunicação(chat)        |
 |  TMTP                 |   rede centralizada         |    comunicação(alternativa ao email)        |
 |  MLS(Message Layer Security)                 |   rede local         |    comunicação(alternativa ao email)        |
-|  nostr-protocol                |   rede distribuída/externa         |    alternativa ao ActivityPub, HTTP |
-|  Dat-protocol                |   rede distribuída/externa         |    alternativa ao ActivityPub, HTTP |
-|  Hypercore-protocol                |   rede distribuída/externa         |   evolução do protocolo Dat |
-|  Blockchain-protocol                |   rede distribuída/externa         |  comunição/transferência de arquivo |
-|  RSS3-protocol                |   rede distribuída/externa         |    comunicação/sincronização |
-|  Fileicon-protocol                |   rede distribuída/externa         |    armazanemento |
-|  Remote-storage-protocol                |   rede distribuída/externa         |   armazanemento |
-|  Solid-project-protocol                |   rede distribuída/externa         |   armazanemento |
-|  Tor-protocol                |   rede distribuída/externa         |   roteamento |
-|  WebRTC-protocol                |   rede distribuída/externa         |   streaming |
-|  FSP-protocol                |   rede distribuída/externa         |   streaming |
-|  Domain Connect-protocol                |   rede distribuída/externa         |   identificação |
-|  DNS-protocol                |   rede distribuída/externa         |   identificação |
-|  Gradesca-protocol                |   rede distribuída/externa         |   sincronização |
-|  ActivityPub-protocol                |   rede distribuída/externa         |   sincronização, comunicação |
-|  SMB-protocol                |   rede distribuída/externa         |   sincronização, comunicação |
-|  BitTorrent-protocol                |   rede distribuída/externa         |   sincronização, compartilhamento, comunicação |
-|  IPFS-protocol                |   rede distribuída/externa         |  sincronização, compartilhamento, comunicação |
-|  Gopher-protocol                |   rede distribuída/externa         |   compartilhamento, comunicação, alternativa ao HTTP |
-|  SPLIP-protocol                |   rede distribuída/externa         |   encapsulamento |
-|  Session-protocol                |   rede distribuída/externa         |   aplicação |
-|  Waku-protocol                |   rede descentralizada/distribuida/externa         |  comunicação |
-|  Spring83-protocol                |   rede descentralizada/distribuida/externa         |  comunicação |
-|  Dlive-protocol                |   rede descentralizada/distribuida/externa         |  comunicação |
-|  Atek-protocol                |   rede descentralizada/distribuida/externa         |  comunicação |
-|  Ambients protocol-protocol                |   rede descentralizada/distribuida/externa         |  comunicação |
+|  nostr                |   rede distribuída/externa         |    alternativa ao ActivityPub, HTTP |
+|  Dat                |   rede distribuída/externa         |    alternativa ao ActivityPub, HTTP |
+|  Hypercore                |   rede distribuída/externa         |   evolução do protocolo Dat |
+|  Blockchain                |   rede distribuída/externa         |  comunição/transferência de arquivo |
+|  RSS3                |   rede distribuída/externa         |    comunicação/sincronização |
+|  Fileicon                |   rede distribuída/externa         |    armazanemento |
+|  Remote-storage                |   rede distribuída/externa         |   armazanemento |
+|  Solid-project                |   rede distribuída/externa         |   armazanemento |
+|  Tor                |   rede distribuída/externa         |   roteamento |
+|  WebRTC                |   rede distribuída/externa         |   streaming |
+|  FSP                |   rede distribuída/externa         |   streaming |
+|  Domain Connect                |   rede distribuída/externa         |   identificação |
+|  DNS                |   rede distribuída/externa         |   identificação |
+|  Gradesca                |   rede distribuída/externa         |   sincronização |
+|  ActivityPub                |   rede distribuída/externa         |   sincronização, comunicação |
+|  SMB                |   rede distribuída/externa         |   sincronização, comunicação |
+|  BitTorrent                |   rede distribuída/externa         |   sincronização, compartilhamento, comunicação |
+|  IPFS                |   rede distribuída/externa         |  sincronização, compartilhamento, comunicação |
+|  Gopher                |   rede distribuída/externa         |   compartilhamento, comunicação, alternativa ao HTTP |
+|  SPLIP                |   rede distribuída/externa         |   encapsulamento |
+|  Session                |   rede distribuída/externa         |   aplicação |
+|  Waku                |   rede descentralizada/distribuida/externa         |  comunicação |
+|  Spring83                |   rede descentralizada/distribuida/externa         |  comunicação |
+|  Dlive                |   rede descentralizada/distribuida/externa         |  comunicação |
+|  Atek                |   rede descentralizada/distribuida/externa         |  comunicação |
+|  Ambients               |   rede descentralizada/distribuida/externa         |  comunicação |
 
 ### órgãos 
 - WICG
