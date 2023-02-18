@@ -4,21 +4,21 @@
 | FTP                         | rede local/externa                       | transferência de arquivo                           |    IETF           |
 | SFTP                        | rede local/externa                       | transferência de arquivo                           |    IETF           |
 | Webdav                      | rede local/externa                       | transferência de arquivo                           |    IETF           |
-| HTTP                        | rede local/externa                       | transferência de arquivo                           |                   |
-| SMTP                        | rede distribuída                         | comunicação(email)                                 |                   |
-| IMAP                        | rede distribuída                         | comunicação(email)                                 |                   |
-| POP3                        | rede distribuída                         | comunicação(email)                                 |                   |
-| Matrix                      | rede distribuída                         | comunicação(chat)                                  |                   |
-| IRC                         | rede distribuída                         | comunicação(chat)                                  |                   |
-| TMTP                        | rede centralizada                        | comunicação(alternativa ao email)                  |                   |
-| MLS(Message Layer Security) | rede local                               | comunicação(alternativa ao email)                  |                   |
+| HTTP                        | rede local/externa                       | transferência de arquivo                           |    W3C            |
+| SMTP                        | rede distribuída                         | comunicação(email)                                 |    IETF           |
+| IMAP                        | rede distribuída                         | comunicação(email)                                 |    IETF           |
+| POP3                        | rede distribuída                         | comunicação(email)                                 |    IETF           |
+| Matrix                      | rede distribuída                         | comunicação(chat)                                  |    IETF           |
+| IRC                         | rede distribuída                         | comunicação(chat)                                  |  Matrix Group     |
+| TMTP                        | rede centralizada                        | comunicação(alternativa ao email)                  | Networking Improv |
+| MLS(Message Layer Security) | rede local                               | comunicação(alternativa ao email)                  |      Dat          |
 | nostr                       | rede distribuída/externa                 | alternativa ao ActivityPub, HTTP                   |                   |
 | Dat                         | rede distribuída/externa                 | alternativa ao ActivityPub, HTTP                   |                   |
 | Hypercore                   | rede distribuída/externa                 | evolução do protocolo Dat                          |                   |
 | Blockchain                  | rede distribuída/externa                 | comunição/transferência de arquivo                 |                   |
 | RSS3                        | rede distribuída/externa                 | comunicação/sincronização                          |                   |
 | Fileicon                    | rede distribuída/externa                 | armazanemento                                      |                   |
-| Remote-storage              | rede distribuída/externa                 | armazanemento                                      |                   |
+| Remote-storage              | rede distribuída/externa                 | armazanemento                                      |    IETF           |
 | Solid-project               | rede distribuída/externa                 | armazanemento                                      |                   |
 | Tor                         | rede distribuída/externa                 | roteamento                                         |                   |
 | WebRTC                      | rede distribuída/externa                 | streaming                                          |                   |
